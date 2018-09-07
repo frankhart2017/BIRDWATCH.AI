@@ -13,6 +13,8 @@
 			}
 			body {
 				 background: url('images/background.svg');
+				 background-size: cover;
+				 background-repeat: no-repeat;
 			}
 			.card {
 				margin: 0 auto;
@@ -34,7 +36,7 @@
 		  <div class="collapse navbar-collapse" id="navbarSupportedContent">
 		    <ul class="navbar-nav mr-auto">
 		      <li class="nav-item">
-		        <a class="nav-link" href="#">About</a>
+		        <a class="nav-link" href="about.php">About</a>
 		      </li>
 		    </ul>
 		  </div>
@@ -42,39 +44,34 @@
 
 		<br><br>
 
-		<!--Cards level 1-->
-		<div class="row">
-			<div class="card" style="width: 18rem;">
-			  <img class="card-img-top" src=".../100px180/" alt="Card image cap">
-			  <div class="card-body">
-			    <h5 class="card-title">Card title</h5>
-			    <a href="#" class="btn btn-primary">Contribute image</a>
-			  </div>
-			</div>
+		<?php
 
-			<?php
+			$link = mysqli_connect("localhost", "root", "password@", "birdwatch");
 
-				$link = mysqli_connect("localhost:8889", "root", "", "birdwatch");
+			echo mysqli_error($link);
 
-				echo mysqli_error($link);
+			$query = "SELECT * FROM `birds`";
 
-				$query = "SELECT * FROM `birds`";
+			$i = 0;
 
-				$i = 0;
-
-				$birds = Array();
-
-				if($result = mysqli_query($link, $query)) {
-					while($row = mysqli_fetch_assoc($result)) {
-						array_push($birds, "Hello");
-					}
+			if($result = mysqli_query($link, $query)) {
+				echo "<div class='row'>";
+				while($row = mysqli_fetch_assoc($result)) {
+					$image = $row['image'];
+					$name = $row['name'];
+					$id = $row['id'];
+					echo '<div class="card" style="width: 18rem;">';
+					echo "<img class='card-img-top' src='images/birds/$image' width='100' height='300' alt='Card image cap'>";
+					echo '<div class="card-body">';
+					echo "<h5 class='card-title'>$name</h5>";
+					echo "<a href='contribute.php?id=$id' class='btn btn-primary'>Contribute image</a>";
+					echo '</div></div>';
+					$i++;
 				}
-
-				print_r($birds);
+				echo "</div>";
+			}
 
 			?>
-
-		</div>
 
 	</body>
 </html>
