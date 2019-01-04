@@ -1,6 +1,6 @@
 <?php
 
-  $link = mysqli_connect("localhost", "root", "password@", "birdwatch");
+  $link = mysqli_connect("******", "******", "******", "******");
 
   if(isset($_POST['submit'])) {
     if($_POST['name'] != "" && $_POST['email'] != "" && $_FILES['image']['name'] != "") {
